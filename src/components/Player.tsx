@@ -3,8 +3,9 @@ import { TUserPhoto, IUserProps } from "../types";
 
 const Player: React.FC<IUserProps> = ({ photo }) => {
   return (
-    <div className="player-box">
+    <div className="card-box">
       <div className={`photo ${photo}`}></div>
+      <div className="cards">adf</div>
     </div>
   );
 };
