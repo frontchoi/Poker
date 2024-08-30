@@ -1,5 +1,20 @@
 .card {
   width: 67px;
   height: 95px;
-  background-image: url("/assets/images/card.png");
+  background-image: url("/assets/images/card.jpg");
+
+  @for $i from 1 through 13 {
+    &.diamond#{$i} {
+      background-position: #{$i * -67}px 0;
+    }
+    &.club#{$i} {
+      background-position: #{$i * -67}px -115px;
+    }
+    &.heart#{$i} {
+      background-position: #{$i * -67}px -228px;
+    }
+    &.spade#{$i} {
+      background-position: #{$i * -67}px -339px;
+    }
+  }
 }

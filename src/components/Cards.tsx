@@ -1,13 +1,14 @@
 import React from "react";
 import "../css/cards.scss";
+import { TCardShape } from "../types";
 
-interface CardsProps {
-  num: number; // 예시로 number 타입으로 지정
+interface ICardsProps {
+  shape: TCardShape;
+  num: number;
 }
 
-const Cards: React.FC<CardsProps> = ({ num }) => {
-  // return <div className={`card${num}`}>Cards{num}</div>;
-  return <div className={`card`}>Cards{num}</div>;
+const Cards: React.FC<ICardsProps> = ({ shape, num }) => {
+  return <div className={`card diamond${num}`}></div>;
 };
 
 export default Cards;

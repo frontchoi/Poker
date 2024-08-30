@@ -4,6 +4,9 @@ import ResultPage from "./pages/Result";
 import GamePage from "./pages/Game";
 import Nav from "./components/Nav";
 
+// 공통 타입스크립트 파일 import
+import "./types";
+
 const Layout = () => {
   return (
     <div>

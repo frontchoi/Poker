@@ -4,8 +4,8 @@ import Cards from "../components/Cards";
 function game() {
   return (
     <div>
-      {[...Array(52)].map((_, i) => (
-        <Cards num={i} />
+      {[...Array(13)].map((_, i) => (
+        <Cards num={i} shape="club" />
       ))}
     </div>
   );
