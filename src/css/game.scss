@@ -1,0 +1,31 @@
+@import "./game/_cards", "./game/_user", "./game/_player";
+
+.game-wrap {
+  padding: 20px;
+  width: 1660px;
+
+  .photo {
+    width: 100px;
+    height: 100px;
+    &.green {
+      background-image: url("/assets/images/user/green.jpg");
+      background-size: 100%;
+    }
+    &.black {
+      background-image: url("/assets/images/user/black.jpg");
+      background-size: 100%;
+    }
+    &.orange {
+      background-image: url("/assets/images/user/orange.jpg");
+      background-size: 100%;
+    }
+    &.red {
+      background-image: url("/assets/images/user/red.jpg");
+      background-size: 100%;
+    }
+    &.yellow {
+      background-image: url("/assets/images/user/yellow.jpg");
+      background-size: 100%;
+    }
+  }
+}

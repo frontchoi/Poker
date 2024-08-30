@@ -1,5 +1,4 @@
 import React from "react";
-import "../css/cards.scss";
 import { TCardShape } from "../types";
 
 interface ICardsProps {
@@ -8,7 +7,7 @@ interface ICardsProps {
 }
 
 const Cards: React.FC<ICardsProps> = ({ shape, num }) => {
-  return <div className={`card diamond${num}`}></div>;
+  return <div className={`card ${shape + num}`}></div>;
 };
 
 export default Cards;

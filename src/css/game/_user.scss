@@ -1,0 +1,35 @@
+.user-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  & + .user-wrap {
+    margin-top: 20px;
+  }
+  .user-box {
+    overflow: hidden;
+    width: 400px;
+    height: 200px;
+    background-color: #a5a5a5;
+    border-radius: 5px;
+    &:nth-child(1) {
+      top: 0;
+      left: 0;
+    }
+    &:nth-child(2) {
+      top: 0;
+      right: 0;
+    }
+    &:nth-child(3) {
+      top: 250px;
+      left: 0;
+    }
+    &:nth-child(4) {
+      top: 250px;
+      right: 0;
+    }
+    &:nth-child(5) {
+    }
+  }
+}
