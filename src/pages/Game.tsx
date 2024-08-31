@@ -4,10 +4,17 @@ import Cards from '../components/Cards';
 import Player from '../components/Player';
 import '../css/game.scss';
 
+enum EIsProgress {
+    INIT,
+    PLAY,
+    END,
+}
+
 const Game = () => {
     const [shapeList, setShapeList] = useState<TCardShape[]>(['diamond', 'club', 'heart', 'spade']);
     const [cardList, setCardList] = useState<string[]>([]); // 전체 카드
-    const [isStart, setIsStart] = useState<boolean>(false);
+    const [isProgress, setIsProgress] = useState<EIsProgress>(EIsProgress.INIT);
+    const [isCount, setIsCount] = useState<number>(0);
 
     const [userList, setUserList] = useState<{
         green: string[];
@@ -33,16 +40,17 @@ const Game = () => {
         setCardList(arr);
     }, []);
 
-    // useEffect(() => {
-    //     if (cardList.length === 0) return;
-    //     console.log('adfasf', cardList);
-    // }, [cardList]);
+    useEffect(() => {
+        if (isProgress === EIsProgress.PLAY) {
+            {
+                [...Array(3)].map((_, i) => cardPlay());
+            }
+        }
+    }, [isProgress]);
 
     useEffect(() => {
-        if (isStart) {
-            cardPlay();
-        }
-    }, [isStart]);
+        if (isCount === 7) setIsProgress(EIsProgress.END);
+    }, [isCount]);
 
     // -----------------------------------------------------------
     // 모양별 카드 생성 함수
@@ -73,19 +81,22 @@ const Game = () => {
             orange,
             yellow,
         });
+        // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
+        setIsCount((prevCount) => prevCount + 1);
     };
 
     return (
         <div className="game-wrap">
-            {isStart ? (
+            {isProgress === EIsProgress.INIT ? (
+                <button className="btn-play" onClick={() => setIsProgress(EIsProgress.PLAY)}>
+                    게임 시작
+                </button>
+            ) : undefined}
+            {isProgress === EIsProgress.PLAY ? (
                 <button className="btn-play" onClick={() => cardPlay()}>
                     다음
                 </button>
-            ) : (
-                <button className="btn-play" onClick={() => setIsStart(true)}>
-                    게임 시작
-                </button>
-            )}
+            ) : undefined}
 
             <div className="user-wrap">
                 <Player photo="black" isPlay={false} cardList={userList.black} />

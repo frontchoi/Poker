@@ -1,4 +1,4 @@
-@import './game/_cards', './game/_user', './game/_player';
+@import './game/cards';
 
 .game-wrap {
     position: relative;
@@ -7,7 +7,7 @@
 
     .btn-play {
         position: absolute;
-        top: 260px;
+        top: 200px;
         left: calc(50% - 50px);
         width: 100px;
         height: 50px;
@@ -44,8 +44,84 @@
         }
         .cards {
             flex-grow: 1; /* 남는 공간을 모두 차지하게 설정 */
-            border: 1px solid #a5a5a5;
             border-radius: 5px;
+            ul {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                li {
+                    &:nth-child(n + 2) {
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+
+        & + .card-box {
+            .cards {
+                ul {
+                    justify-content: flex-start;
+                }
+            }
+        }
+    }
+
+    .player-wrap {
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+
+        .card-box {
+            width: 800px;
+            height: 200px;
+            margin-left: -120px;
+            .photo {
+                margin-right: 40px;
+            }
+            .cards {
+                ul {
+                    justify-content: center;
+                }
+            }
+        }
+    }
+    .user-wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+        & + .user-wrap {
+            margin-top: 120px;
+        }
+        .card-box {
+            width: 680px;
+            height: 200px;
+            &:nth-child(1) {
+                .photo {
+                    margin-right: 40px;
+                }
+            }
+            &:nth-child(2) {
+                flex-direction: row-reverse;
+                .photo {
+                    margin-left: 40px;
+                }
+            }
+            .cards {
+                ul {
+                    li {
+                        &:nth-child(2),
+                        &:nth-child(3),
+                        &:nth-child(7) {
+                            .card {
+                                background-image: none;
+                                background-color: #dfdfdf;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
