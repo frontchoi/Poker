@@ -3,18 +3,20 @@ import { TCardShape, TUserName } from '../types';
 import Cards from '../components/Cards';
 import Player from '../components/Player';
 import '../css/game.scss';
+import Confirm from './../components/Confirm';
 
 enum EIsProgress {
     INIT,
     PLAY,
     END,
+    CONFIRM,
 }
 
 const Game = () => {
     const [shapeList, setShapeList] = useState<TCardShape[]>(['diamond', 'club', 'heart', 'spade']);
     const [cardList, setCardList] = useState<string[]>([]); // 전체 카드
     const [isProgress, setIsProgress] = useState<EIsProgress>(EIsProgress.INIT);
-    const [isCount, setIsCount] = useState<number>(0);
+    const [playCount, setPlayCount] = useState<number>(0);
 
     const [userList, setUserList] = useState<{
         green: string[];
@@ -49,8 +51,8 @@ const Game = () => {
     }, [isProgress]);
 
     useEffect(() => {
-        if (isCount === 7) setIsProgress(EIsProgress.END);
-    }, [isCount]);
+        if (playCount === 7) setIsProgress(EIsProgress.END);
+    }, [playCount]);
 
     // -----------------------------------------------------------
     // 모양별 카드 생성 함수
@@ -82,7 +84,7 @@ const Game = () => {
             yellow,
         });
         // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
-        setIsCount((prevCount) => prevCount + 1);
+        setPlayCount((prevCount) => prevCount + 1);
     };
 
     return (
@@ -97,6 +99,11 @@ const Game = () => {
                     다음
                 </button>
             ) : undefined}
+            {isProgress === EIsProgress.END ? (
+                <button className="btn-play" onClick={() => setIsProgress(EIsProgress.CONFIRM)}>
+                    승자 예측
+                </button>
+            ) : undefined}
 
             <div className="user-wrap">
                 <Player photo="black" isPlay={false} cardList={userList.black} />
@@ -109,6 +116,7 @@ const Game = () => {
             <div className="player-wrap">
                 <Player photo="green" isPlay={true} cardList={userList.green} />
             </div>
+            {isProgress === EIsProgress.CONFIRM ? <Confirm /> : undefined}
         </div>
     );
 };
