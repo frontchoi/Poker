@@ -1,13 +1,12 @@
-import React from "react";
-import { TCardShape } from "../types";
+import React from 'react';
 
 interface ICardsProps {
-  shape: TCardShape;
-  num: number;
+    shape: string;
+    num: string;
 }
 
 const Cards: React.FC<ICardsProps> = ({ shape, num }) => {
-  return <div className={`card ${shape + num}`}></div>;
+    return <div className={`card ${shape + num}`}></div>;
 };
 
 export default Cards;

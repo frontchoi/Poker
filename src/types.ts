@@ -1,6 +1,8 @@
-export type TCardShape = "diamond" | "club" | "heart" | "spade";
-export type TUserPhoto = "green" | "black" | "orange" | "red" | "yellow";
+export type TCardShape = 'diamond' | 'club' | 'heart' | 'spade';
+export type TUserName = 'green' | 'black' | 'orange' | 'red' | 'yellow';
 
-export interface IUserProps {
-  photo: TUserPhoto;
+export interface IPlayerProps {
+    photo: TUserName;
+    isPlay: boolean;
+    cardList: string[];
 }
