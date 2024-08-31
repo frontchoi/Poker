@@ -6,4 +6,6 @@
 
 저장소 : https://github.com/frontchoi/Poker
 
+<img src="./public/poker.PNG">
+
 ---
