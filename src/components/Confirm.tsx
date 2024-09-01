@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TUserName } from '../types';
+import { UserSelectContext } from './../context/UserSelectContext';
 
 const Confirm = () => {
     const [isSelect, setIsSelect] = useState<TUserName>('');
+    const [selectUser, setUser] = useContext<any>(UserSelectContext);
 
     const userSelect = (user: TUserName) => {
         setIsSelect((prevUser) => (prevUser === user ? '' : user));
+
+        setUser(user);
     };
 
     return (

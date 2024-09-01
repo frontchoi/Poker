@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TCardShape, TUserName } from '../types';
 import Cards from '../components/Cards';
 import Player from '../components/Player';
 import Confirm from './../components/Confirm';
+import { UserSelectContext } from './../context/UserSelectContext';
 import '../css/game.scss';
 
 enum EIsProgress {
@@ -31,6 +32,7 @@ const Game = () => {
         red: [],
         yellow: [],
     });
+    const [selectUser] = useContext<any>(UserSelectContext);
 
     useEffect(() => {
         let arr: any = [];
@@ -89,6 +91,7 @@ const Game = () => {
 
     return (
         <div className="game-wrap">
+            selectUser : {selectUser}
             {isProgress === EIsProgress.INIT ? (
                 <button className="btn-play" onClick={() => setIsProgress(EIsProgress.PLAY)}>
                     게임 시작
@@ -104,7 +107,6 @@ const Game = () => {
                     승자 예측
                 </button>
             ) : undefined}
-
             <div className="user-wrap">
                 <Player photo="black" isPlay={false} cardList={userList.black} />
                 <Player photo="orange" isPlay={false} cardList={userList.orange} />
