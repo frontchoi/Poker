@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { TCardShape, TUserName } from '../types';
 import Cards from '../components/Cards';
 import Player from '../components/Player';
-import '../css/game.scss';
 import Confirm from './../components/Confirm';
+import '../css/game.scss';
 
 enum EIsProgress {
     INIT,
