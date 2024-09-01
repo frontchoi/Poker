@@ -1,9 +1,10 @@
 import { createContext, useMemo, useState, ReactNode } from 'react';
+
 type TUserSelectContext = [any, (user: any) => void]; // 사용자 타입에 맞게 `any`를 적절히 변경
 
 export const UserSelectContext = createContext<TUserSelectContext | null>(null);
 
-const UserSelectContextProvider = (props: { children: ReactNode }) => {
+export const UserSelectContextProvider = (props: { children: ReactNode }) => {
     const [selectUser, setSelectUser] = useState<any>('');
 
     const value = useMemo(() => {
@@ -16,5 +17,3 @@ const UserSelectContextProvider = (props: { children: ReactNode }) => {
 
     return <UserSelectContext.Provider value={value}>{props.children}</UserSelectContext.Provider>;
 };
-
-export default UserSelectContextProvider;

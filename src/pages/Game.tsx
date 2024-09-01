@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { TCardShape, TUserName } from '../types';
-import Cards from '../components/Cards';
-import Player from '../components/Player';
-import Confirm from './../components/Confirm';
-import { UserSelectContext } from './../context/UserSelectContext';
-import '../css/game.scss';
+import { TCardShape, TUserName } from 'types';
+import Cards from 'components/Cards';
+import Player from 'components/Player';
+import Confirm from 'components/Confirm';
+import { UserSelectContext } from 'context/UserSelectContext';
+import 'css/game.scss';
 
 enum EIsProgress {
     INIT,
