@@ -38,8 +38,8 @@ const Game = () => {
     }, []);
 
     useEffect(() => {
-        if (playCount > 0 && playCount < 3) cardPlay();
-        else if (playCount === 7) setIsProgress(EIsProgress.END);
+        if (playCount === 7) setIsProgress(EIsProgress.END);
+        else if (playCount > 0 && playCount < 3) cardPlay(); // 처음 시작 시 3장의 카드를 받게함
     }, [playCount]);
 
     // -----------------------------------------------------------
@@ -80,7 +80,6 @@ const Game = () => {
         // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
         setPlayCount((prevCount) => prevCount + 1);
     };
-
     // 유저 선택 팝업 닫힘
     const closeUserSelect = () => {
         setIsProgress(EIsProgress.RESULT);

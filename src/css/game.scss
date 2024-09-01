@@ -54,6 +54,9 @@
     }
     .card-box {
         display: flex;
+        .txt-made {
+            color: #fff;
+        }
         .cards {
             flex-grow: 1; /* 남는 공간을 모두 차지하게 설정 */
             border-radius: 5px;

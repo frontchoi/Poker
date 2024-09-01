@@ -1,4 +1,4 @@
-export type TCardShape = 'diamond' | 'club' | 'heart' | 'spade';
+export type TCardShape = '' | 'diamond' | 'club' | 'heart' | 'spade';
 export type TUserName = '' | 'green' | 'black' | 'orange' | 'red' | 'yellow';
 
 export interface IPlayerProps {
@@ -14,4 +14,11 @@ export enum EIsProgress {
     END,
     CONFIRM,
     RESULT,
+}
+
+export interface ICardMade {
+    made: boolean;
+    number?: number;
+    subNumber?: number;
+    shape?: TCardShape;
 }
