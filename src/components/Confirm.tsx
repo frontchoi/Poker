@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { TUserName } from '../types';
-import { UserSelectContext } from './../context/UserSelectContext';
+import { UserContext } from '../context/UserContext';
 
 interface IConfirmProps {
     popupClose: () => void; // popupClose 함수의 타입 정의
@@ -8,7 +8,7 @@ interface IConfirmProps {
 
 const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
     const [isSelect, setIsSelect] = useState<TUserName>('');
-    const [selectUser, setUser] = useContext<any>(UserSelectContext);
+    const [selectUser, setUser] = useContext<any>(UserContext);
 
     const userSelect = (user: TUserName) => {
         setIsSelect((prevUser) => (prevUser === user ? '' : user));

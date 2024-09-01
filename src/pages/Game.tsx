@@ -3,7 +3,7 @@ import { TCardShape, TUserName, EIsProgress } from 'types';
 import Cards from 'components/Cards';
 import Player from 'components/Player';
 import Confirm from 'components/Confirm';
-import { UserSelectContext } from 'context/UserSelectContext';
+import { UserContext } from 'context/UserContext';
 import 'css/game.scss';
 
 const Game = () => {
@@ -25,7 +25,7 @@ const Game = () => {
         red: [],
         yellow: [],
     });
-    const [selectUser] = useContext<any>(UserSelectContext);
+    const [selectUser] = useContext<any>(UserContext);
 
     useEffect(() => {
         let arr: any = [];
