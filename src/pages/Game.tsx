@@ -38,19 +38,8 @@ const Game = () => {
     }, []);
 
     useEffect(() => {
-        const playCardsSequentially = async () => {
-            if (isProgress === EIsProgress.PLAY) {
-                await cardPlay();
-                await cardPlay();
-                await cardPlay();
-            }
-        };
-
-        playCardsSequentially();
-    }, [isProgress]);
-
-    useEffect(() => {
-        if (playCount === 7) setIsProgress(EIsProgress.END);
+        if (playCount > 0 && playCount < 3) cardPlay();
+        else if (playCount === 7) setIsProgress(EIsProgress.END);
     }, [playCount]);
 
     // -----------------------------------------------------------
@@ -62,39 +51,38 @@ const Game = () => {
         }
         return arr;
     };
+    // 게임 시작
+    const gameStart = () => {
+        setIsProgress(EIsProgress.PLAY);
+        cardPlay();
+    };
     // 카드 분배하는 함수
-    const cardPlay = async () => {
-        return new Promise<void>((resolve) => {
-            const cards: string[] = JSON.parse(JSON.stringify(cardList));
-            const { green, black, red, yellow, orange } = { ...userList };
+    const cardPlay = () => {
+        const cards: string[] = JSON.parse(JSON.stringify(cardList));
+        const { green, black, red, yellow, orange } = { ...userList };
 
-            green.push(cards.shift() || 'error');
-            red.push(cards.shift() || 'error');
-            black.push(cards.shift() || 'error');
-            orange.push(cards.shift() || 'error');
-            yellow.push(cards.shift() || 'error');
+        green.push(cards.shift() || 'error');
+        red.push(cards.shift() || 'error');
+        black.push(cards.shift() || 'error');
+        orange.push(cards.shift() || 'error');
+        yellow.push(cards.shift() || 'error');
 
-            // 카드 분배 후 state 업데이트
-            setCardList(cards);
-            setUserList({
-                green,
-                red,
-                black,
-                orange,
-                yellow,
-            });
-
-            // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
-            setPlayCount((prevCount) => prevCount + 1);
-
-            // Promise를 완료시키기 위해 resolve 호출
-            resolve();
+        // 카드 분배 후 state 업데이트
+        setCardList(cards);
+        setUserList({
+            green,
+            red,
+            black,
+            orange,
+            yellow,
         });
+
+        // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
+        setPlayCount((prevCount) => prevCount + 1);
     };
 
     // 유저 선택 팝업 닫힘
     const closeUserSelect = () => {
-        console.log('adfafasdfasf');
         setIsProgress(EIsProgress.RESULT);
     };
 
@@ -102,7 +90,7 @@ const Game = () => {
         <div className="game-wrap">
             {/* selectUser : {selectUser} */}
             {isProgress === EIsProgress.INIT ? (
-                <button className="btn-play" onClick={() => setIsProgress(EIsProgress.PLAY)}>
+                <button className="btn-play" onClick={() => gameStart()}>
                     게임 시작
                 </button>
             ) : undefined}
