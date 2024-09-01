@@ -11,6 +11,7 @@ enum EIsProgress {
     PLAY,
     END,
     CONFIRM,
+    RESULT,
 }
 
 const Game = () => {
@@ -89,9 +90,15 @@ const Game = () => {
         setPlayCount((prevCount) => prevCount + 1);
     };
 
+    // 유저 선택 팝업 닫힘
+    const closeUserSelect = () => {
+        console.log('adfafasdfasf');
+        setIsProgress(EIsProgress.RESULT);
+    };
+
     return (
         <div className="game-wrap">
-            selectUser : {selectUser}
+            {/* selectUser : {selectUser} */}
             {isProgress === EIsProgress.INIT ? (
                 <button className="btn-play" onClick={() => setIsProgress(EIsProgress.PLAY)}>
                     게임 시작
@@ -108,17 +115,17 @@ const Game = () => {
                 </button>
             ) : undefined}
             <div className="user-wrap">
-                <Player photo="black" isPlay={false} cardList={userList.black} />
-                <Player photo="orange" isPlay={false} cardList={userList.orange} />
+                <Player photo="black" isPlay={false} isSelect={selectUser === 'black'} cardList={userList.black} />
+                <Player photo="orange" isPlay={false} isSelect={selectUser === 'orange'} cardList={userList.orange} />
             </div>
             <div className="user-wrap">
-                <Player photo="red" isPlay={false} cardList={userList.red} />
-                <Player photo="yellow" isPlay={false} cardList={userList.yellow} />
+                <Player photo="red" isPlay={false} isSelect={selectUser === 'red'} cardList={userList.red} />
+                <Player photo="yellow" isPlay={false} isSelect={selectUser === 'yellow'} cardList={userList.yellow} />
             </div>
             <div className="player-wrap">
-                <Player photo="green" isPlay={true} cardList={userList.green} />
+                <Player photo="green" isPlay={true} isSelect={selectUser === 'green'} cardList={userList.green} />
             </div>
-            {isProgress === EIsProgress.CONFIRM ? <Confirm /> : undefined}
+            {isProgress === EIsProgress.CONFIRM && <Confirm popupClose={closeUserSelect} />}
         </div>
     );
 };

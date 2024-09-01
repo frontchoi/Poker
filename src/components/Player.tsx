@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { TUserName, IPlayerProps } from '../types';
 import Cards from './Cards';
 
-const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList }) => {
+const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) => {
     return (
         <div className="card-box">
-            <div className={`photo ${photo}`}></div>
+            <div className={`photo ${photo} ${isSelect ? 'check' : ''}`}></div>
             <div className="cards">
                 <ul>
                     {cardList.map((item, idx) => {

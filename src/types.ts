@@ -4,5 +4,6 @@ export type TUserName = '' | 'green' | 'black' | 'orange' | 'red' | 'yellow';
 export interface IPlayerProps {
     photo: TUserName;
     isPlay: boolean;
+    isSelect: boolean;
     cardList: string[];
 }

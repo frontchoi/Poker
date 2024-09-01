@@ -2,7 +2,11 @@ import React, { useContext, useState } from 'react';
 import { TUserName } from '../types';
 import { UserSelectContext } from './../context/UserSelectContext';
 
-const Confirm = () => {
+interface IConfirmProps {
+    popupClose: () => void; // popupClose 함수의 타입 정의
+}
+
+const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
     const [isSelect, setIsSelect] = useState<TUserName>('');
     const [selectUser, setUser] = useContext<any>(UserSelectContext);
 
@@ -23,7 +27,9 @@ const Confirm = () => {
                     <li className={`photo yellow ${isSelect === 'yellow' ? 'check' : ''}`} onClick={() => userSelect('yellow')}></li>
                     <li className={`photo green ${isSelect === 'green' ? 'check' : ''}`} onClick={() => userSelect('green')}></li>
                 </ul>
-                <button disabled={isSelect === '' ? true : false}>확인</button>
+                <button disabled={isSelect === '' ? true : false} onClick={popupClose}>
+                    확인
+                </button>
             </div>
         </div>
     );
