@@ -65,8 +65,8 @@ const Game = () => {
     };
     // 카드 분배하는 함수
     const cardPlay = () => {
-        const cards: string[] = cardList;
-        const { green, black, red, yellow, orange } = userList;
+        const cards: string[] = JSON.parse(JSON.stringify(cardList));
+        const { green, black, red, yellow, orange } = { ...userList };
 
         green.push(cards.shift() || 'error');
         red.push(cards.shift() || 'error');
