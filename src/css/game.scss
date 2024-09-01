@@ -119,15 +119,19 @@
                     margin-left: 40px;
                 }
             }
-            .cards {
-                ul {
-                    li {
-                        &:nth-child(2),
-                        &:nth-child(3),
-                        &:nth-child(7) {
-                            .card {
-                                background-image: none;
-                                background-color: #dfdfdf;
+        }
+        &:not(.result) {
+            .card-box {
+                .cards {
+                    ul {
+                        li {
+                            &:nth-child(2),
+                            &:nth-child(3),
+                            &:nth-child(7) {
+                                .card {
+                                    background-image: none;
+                                    background-color: #dfdfdf;
+                                }
                             }
                         }
                     }

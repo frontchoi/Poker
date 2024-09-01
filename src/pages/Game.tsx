@@ -1,18 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { TCardShape, TUserName } from 'types';
+import { TCardShape, TUserName, EIsProgress } from 'types';
 import Cards from 'components/Cards';
 import Player from 'components/Player';
 import Confirm from 'components/Confirm';
 import { UserSelectContext } from 'context/UserSelectContext';
 import 'css/game.scss';
-
-enum EIsProgress {
-    INIT,
-    PLAY,
-    END,
-    CONFIRM,
-    RESULT,
-}
 
 const Game = () => {
     const [shapeList, setShapeList] = useState<TCardShape[]>(['diamond', 'club', 'heart', 'spade']);
@@ -46,11 +38,15 @@ const Game = () => {
     }, []);
 
     useEffect(() => {
-        if (isProgress === EIsProgress.PLAY) {
-            {
-                [...Array(3)].map((_, i) => cardPlay());
+        const playCardsSequentially = async () => {
+            if (isProgress === EIsProgress.PLAY) {
+                await cardPlay();
+                await cardPlay();
+                await cardPlay();
             }
-        }
+        };
+
+        playCardsSequentially();
     }, [isProgress]);
 
     useEffect(() => {
@@ -67,27 +63,33 @@ const Game = () => {
         return arr;
     };
     // 카드 분배하는 함수
-    const cardPlay = () => {
-        const cards: string[] = JSON.parse(JSON.stringify(cardList));
-        const { green, black, red, yellow, orange } = { ...userList };
+    const cardPlay = async () => {
+        return new Promise<void>((resolve) => {
+            const cards: string[] = JSON.parse(JSON.stringify(cardList));
+            const { green, black, red, yellow, orange } = { ...userList };
 
-        green.push(cards.shift() || 'error');
-        red.push(cards.shift() || 'error');
-        black.push(cards.shift() || 'error');
-        orange.push(cards.shift() || 'error');
-        yellow.push(cards.shift() || 'error');
+            green.push(cards.shift() || 'error');
+            red.push(cards.shift() || 'error');
+            black.push(cards.shift() || 'error');
+            orange.push(cards.shift() || 'error');
+            yellow.push(cards.shift() || 'error');
 
-        // 카드 분배 후 state 를 업데이트
-        setCardList(cards);
-        setUserList({
-            green,
-            red,
-            black,
-            orange,
-            yellow,
+            // 카드 분배 후 state 업데이트
+            setCardList(cards);
+            setUserList({
+                green,
+                red,
+                black,
+                orange,
+                yellow,
+            });
+
+            // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
+            setPlayCount((prevCount) => prevCount + 1);
+
+            // Promise를 완료시키기 위해 resolve 호출
+            resolve();
         });
-        // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
-        setPlayCount((prevCount) => prevCount + 1);
     };
 
     // 유저 선택 팝업 닫힘
@@ -114,11 +116,11 @@ const Game = () => {
                     승자 예측
                 </button>
             ) : undefined}
-            <div className="user-wrap">
+            <div className={`user-wrap ${isProgress === EIsProgress.RESULT ? 'result' : ''}`}>
                 <Player photo="black" isPlay={false} isSelect={selectUser === 'black'} cardList={userList.black} />
                 <Player photo="orange" isPlay={false} isSelect={selectUser === 'orange'} cardList={userList.orange} />
             </div>
-            <div className="user-wrap">
+            <div className={`user-wrap ${isProgress === EIsProgress.RESULT ? 'result' : ''}`}>
                 <Player photo="red" isPlay={false} isSelect={selectUser === 'red'} cardList={userList.red} />
                 <Player photo="yellow" isPlay={false} isSelect={selectUser === 'yellow'} cardList={userList.yellow} />
             </div>

@@ -7,3 +7,11 @@ export interface IPlayerProps {
     isSelect: boolean;
     cardList: string[];
 }
+
+export enum EIsProgress {
+    INIT,
+    PLAY,
+    END,
+    CONFIRM,
+    RESULT,
+}
