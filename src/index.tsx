@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './css/index.scss';
 import { BrowserRouter } from 'react-router-dom';
-import { UserSelectContext } from './context/UserSelectContext';
+import UserSelectContextProvider from './context/UserSelectContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <UserSelectContext.Provider value={}>
+            <UserSelectContextProvider>
                 <App />
-            </UserSelectContext.Provider>
+            </UserSelectContextProvider>
         </BrowserRouter>
     </React.StrictMode>,
 );
