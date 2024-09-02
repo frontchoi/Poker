@@ -35,16 +35,20 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
     const [numberList, setNumberList] = useState(() => new Array(13).fill(0));
 
     useEffect(() => {
-        if (cardList.length >= 3 && isPlay) {
-            const arr: string[][] = cardList.map((item) => item.split('_'));
+        if (cardList.length < 3 || !isPlay) return; // 카드의 숫자가 3개 미만이거나 플레이어가 아니면 리턴
 
-            const shapeArr: string[] = arr.map((item) => {
-                return item[0];
-            });
-            const numberArr: number[] = arr.map((item) => {
-                return Number(item[1]);
-            });
-        }
+        const arr: string[][] = cardList.map((item) => item.split('_'));
+        const shapeArr: string[] = arr.map((item) => {
+            return item[0];
+        });
+        const numberArr: number[] = arr.map((item) => {
+            return Number(item[1]);
+        });
+
+        // shapeArr 로 현재 shape 갯수 확인
+        shapeArr.forEach((item) => {
+            console.log('adfasfdf', isPlay, item);
+        });
     }, [cardList]);
 
     return (
