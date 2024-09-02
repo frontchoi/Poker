@@ -19,8 +19,6 @@ export enum EIsProgress {
 export interface ICardMade {
     made: boolean;
     number?: number;
-    subNumber?: number;
-    shape?: TCardShape;
 }
 
 export interface IShapeList {
