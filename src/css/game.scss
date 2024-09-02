@@ -53,8 +53,13 @@
         }
     }
     .card-box {
+        position: relative;
         display: flex;
         .txt-made {
+            position: absolute;
+            top: -30px;
+            width: 100px;
+            text-align: center;
             color: #fff;
         }
         .cards {
@@ -125,6 +130,9 @@
         }
         &:not(.result) {
             .card-box {
+                .txt-made {
+                    display: none;
+                }
                 .cards {
                     ul {
                         li {

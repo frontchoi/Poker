@@ -87,7 +87,6 @@ const Game = () => {
 
     return (
         <div className="game-wrap">
-            {/* selectUser : {selectUser} */}
             {isProgress === EIsProgress.INIT ? (
                 <button className="btn-play" onClick={() => gameStart()}>
                     게임 시작
