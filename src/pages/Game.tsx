@@ -25,7 +25,7 @@ const Game = () => {
         red: [],
         yellow: [],
     });
-    const [selectUser] = useContext<any>(UserContext);
+    const [selectUser, setUser, setScore, getWinner] = useContext<any>(UserContext);
 
     useEffect(() => {
         let arr: any = [];
@@ -83,6 +83,8 @@ const Game = () => {
     // 유저 선택 팝업 닫힘
     const closeUserSelect = () => {
         setIsProgress(EIsProgress.RESULT);
+
+        console.log('getWinner', getWinner());
     };
 
     return (
