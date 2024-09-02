@@ -200,7 +200,9 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winn
     return (
         <div className="card-box">
             <p className="txt-made">{currentMade}</p>
-            <div className={`photo ${name} ${isSelect ? 'check' : ''} ${winner ? 'winner' : ''}`}></div>
+            <div className={`photo ${name} ${isSelect ? 'check' : ''} ${winner ? 'winner' : ''}`}>
+                <span></span>
+            </div>
             <div className="cards">
                 <ul>
                     {cardList.map((item, idx) => {

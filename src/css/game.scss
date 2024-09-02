@@ -12,12 +12,22 @@
         height: 50px;
         font-size: 18px;
     }
-
     .photo {
         position: relative;
         width: 100px;
         height: 100px;
         border-radius: 100%;
+
+        &::after {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            content: '';
+            width: 110px;
+            height: 110px;
+            background-size: 100%;
+            opacity: 0.8;
+        }
         &.green {
             background-image: url('/assets/images/user/green.jpg');
             background-size: 100%;
@@ -38,29 +48,31 @@
             background-image: url('/assets/images/user/yellow.jpg');
             background-size: 100%;
         }
-        &.check {
+        &.winner {
             &::after {
-                position: absolute;
-                top: -5px;
-                left: -5px;
-                content: '';
-                width: 110px;
-                height: 110px;
                 background-image: url('/assets/images/check.png');
-                background-size: 100%;
-                opacity: 0.8;
+            }
+            span {
+                &::after {
+                    display: block;
+                }
             }
         }
-    }
-    .winner {
-        &::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 50px;
-            margin: -20px 0 0 26px;
-            background-image: url('/assets/images/winner.png');
-            background-size: 100%;
+        &.check {
+            &::after {
+                background-image: url('/assets/images/check2.png');
+            }
+        }
+        span {
+            &::after {
+                content: '';
+                display: none;
+                width: 50px;
+                height: 50px;
+                margin: -90px 0 0 26px;
+                background-image: url('/assets/images/winner.png');
+                background-size: 100%;
+            }
         }
     }
     .card-box {
@@ -99,11 +111,10 @@
     .player-wrap {
         display: flex;
         justify-content: center;
-        margin-top: 80px;
+        margin-top: 190px;
 
         .card-box {
             width: 800px;
-            height: 200px;
             margin-left: -120px;
             .photo {
                 margin-right: 40px;
@@ -122,11 +133,10 @@
         width: 100%;
         height: 100%;
         & + .user-wrap {
-            margin-top: 120px;
+            margin-top: 210px;
         }
         .card-box {
             width: 740px;
-            height: 200px;
             &:nth-child(1) {
                 .photo {
                     margin-right: 40px;
