@@ -103,15 +103,15 @@ const Game = () => {
                 </button>
             ) : undefined}
             <div className={`user-wrap ${isProgress === EIsProgress.RESULT ? 'result' : ''}`}>
-                <Player photo="black" isPlay={false} isSelect={selectUser === 'black'} cardList={userList.black} />
-                <Player photo="orange" isPlay={false} isSelect={selectUser === 'orange'} cardList={userList.orange} />
+                <Player name="black" isPlay={false} isSelect={selectUser === 'black'} cardList={userList.black} />
+                <Player name="orange" isPlay={false} isSelect={selectUser === 'orange'} cardList={userList.orange} />
             </div>
             <div className={`user-wrap ${isProgress === EIsProgress.RESULT ? 'result' : ''}`}>
-                <Player photo="red" isPlay={false} isSelect={selectUser === 'red'} cardList={userList.red} />
-                <Player photo="yellow" isPlay={false} isSelect={selectUser === 'yellow'} cardList={userList.yellow} />
+                <Player name="red" isPlay={false} isSelect={selectUser === 'red'} cardList={userList.red} />
+                <Player name="yellow" isPlay={false} isSelect={selectUser === 'yellow'} cardList={userList.yellow} />
             </div>
             <div className="player-wrap">
-                <Player photo="green" isPlay={true} isSelect={selectUser === 'green'} cardList={userList.green} />
+                <Player name="green" isPlay={true} isSelect={selectUser === 'green'} cardList={userList.green} />
             </div>
             {isProgress === EIsProgress.CONFIRM && <Confirm popupClose={closeUserSelect} />}
         </div>

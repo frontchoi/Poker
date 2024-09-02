@@ -2,7 +2,7 @@ export type TCardShape = '' | 'diamond' | 'club' | 'heart' | 'spade';
 export type TUserName = '' | 'green' | 'black' | 'orange' | 'red' | 'yellow';
 
 export interface IPlayerProps {
-    photo: TUserName;
+    name: TUserName;
     isPlay: boolean;
     isSelect: boolean;
     cardList: string[];

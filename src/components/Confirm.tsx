@@ -8,7 +8,7 @@ interface IConfirmProps {
 
 const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
     const [isSelect, setIsSelect] = useState<TUserName>('');
-    const [selectUser, setUser] = useContext<any>(UserContext);
+    const [selectUser, setUser, setScore] = useContext<any>(UserContext);
 
     const userSelect = (user: TUserName) => {
         setIsSelect((prevUser) => (prevUser === user ? '' : user));
