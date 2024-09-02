@@ -8,38 +8,38 @@ interface ICardMadeMap {
 type TNumberListType = {
     [key: string]: number;
 };
-// spade > diamond > heart > club
-let cardMade: ICardMadeMap = {
-    noPair: { made: true, number: 0 },
-    onePair: { made: false, number: 0 },
-    twoPair: { made: false, number: 0 },
-    triple: { made: false, number: 0 },
-    flush: { made: false, number: 0 },
-    fullHouse: { made: false, number: 0 },
-    fourCards: { made: false, number: 0 },
-};
-let shapeList: IShapeList = {
-    club: 0,
-    heart: 0,
-    diamond: 0,
-    spade: 0,
-};
-let numberList: TNumberListType = {
-    '1': 0,
-    '2': 0,
-    '3': 0,
-    '4': 0,
-    '5': 0,
-    '6': 0,
-    '7': 0,
-    '8': 0,
-    '9': 0,
-    '10': 0,
-    '11': 0,
-    '12': 0,
-    '13': 0,
-};
 const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) => {
+    // spade > diamond > heart > club
+    let cardMade: ICardMadeMap = {
+        noPair: { made: true, number: 0 },
+        onePair: { made: false, number: 0 },
+        twoPair: { made: false, number: 0 },
+        triple: { made: false, number: 0 },
+        flush: { made: false, number: 0 },
+        fullHouse: { made: false, number: 0 },
+        fourCards: { made: false, number: 0 },
+    };
+    let shapeList: IShapeList = {
+        club: 0,
+        heart: 0,
+        diamond: 0,
+        spade: 0,
+    };
+    let numberList: TNumberListType = {
+        '1': 0,
+        '2': 0,
+        '3': 0,
+        '4': 0,
+        '5': 0,
+        '6': 0,
+        '7': 0,
+        '8': 0,
+        '9': 0,
+        '10': 0,
+        '11': 0,
+        '12': 0,
+        '13': 0,
+    };
     const [currentMade, setCurrentMade] = useState<string>('');
 
     useEffect(() => {
@@ -72,13 +72,6 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
                     break;
             }
         });
-        // 플러시 확인
-        for (const [key, value] of Object.entries(shapeList)) {
-            if (value >= 5) {
-                cardMade.flush.made = true;
-                // cardMade.flush.shape = key as TCardShape;
-            }
-        }
 
         // 2. 페어, 트리플, 풀하우스, 포카드 확인
         const numberArr: number[] = arr.map((item) => {
@@ -88,12 +81,20 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
         numberArr.forEach((item: number) => {
             numberList[item.toString()] += 1;
         });
+        // 플러시 확인
+        for (const [key, value] of Object.entries(shapeList)) {
+            if (value >= 5) {
+                cardMade.flush.made = true;
+                cardMade.flush.number = Math.max(...numberArr);
+                // cardMade.flush.shape = key as TCardShape;
+            }
+        }
 
         cardMade.noPair.number = Math.max(...numberArr); // 배열 안에서 제일 높은 수 찾기
 
         for (const [key, value] of Object.entries(numberList)) {
             // 원페어 확인
-            if (value >= 2) {
+            if (value === 2) {
                 cardMade.onePair.made = true;
                 cardMade.onePair.number = Number(key || 0);
             }
@@ -144,12 +145,34 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
     const madeCheck = () => {
         const { noPair, onePair, twoPair, triple, flush, fullHouse, fourCards } = cardMade;
 
-        let txt = `${noPair.number} 노페어`;
-        // if (onePair.made) {
-        //     txt = `${onePair.number} 원페어`;
-        // }
+        let txt = `${noPair.number && noPair.number > 10 ? jqkaToStr(noPair.number) : noPair.number} 노페어`;
+        if (onePair.made) {
+            txt = `${onePair.number && onePair.number > 10 ? jqkaToStr(onePair.number) : onePair.number} 원페어`;
+        }
+        if (twoPair.made) {
+            txt = `${twoPair.number && twoPair.number > 10 ? jqkaToStr(twoPair.number) : twoPair.number} 투페어`;
+        }
+        if (triple.made) {
+            txt = `${triple.number && triple.number > 10 ? jqkaToStr(triple.number) : triple.number} 트리플`;
+        }
+        if (flush.made) {
+            txt = `${flush.number && flush.number > 10 ? jqkaToStr(flush.number) : flush.number} 플러시`;
+        }
+        if (fullHouse.made) {
+            txt = `${fullHouse.number && fullHouse.number > 10 ? jqkaToStr(fullHouse.number) : fullHouse.number} 풀하우스`;
+        }
+        if (fourCards.made) {
+            txt = `${fourCards.number && fourCards.number > 10 ? jqkaToStr(fourCards.number) : fourCards.number} 포카드`;
+        }
 
         setCurrentMade(txt);
+    };
+
+    const jqkaToStr = (txt: number) => {
+        if (txt === 11) return 'J';
+        else if (txt === 12) return 'Q';
+        else if (txt === 13) return 'K';
+        else if (txt === 1) return 'A';
     };
 
     return (
