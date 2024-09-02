@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TUserName, IPlayerProps, ICardMade } from '../types';
+import { TUserName, TCardShape, IPlayerProps, ICardMade, IShapeList } from '../types';
 import Cards from './Cards';
 
 interface ICardMadeMap {
@@ -20,18 +20,12 @@ let cardMade: ICardMadeMap = {
 
 const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) => {
     const [maxMade, setMaxMade] = useState<string>('');
-    const [shapeList, setShapeList] = useState<{
-        club: number;
-        heart: number;
-        diamond: number;
-        spade: number;
-    }>({
-        diamond: 0,
+    const [shapeList, setShapeList] = useState<IShapeList>({
         club: 0,
         heart: 0,
+        diamond: 0,
         spade: 0,
     });
-
     const [numberList, setNumberList] = useState(() => new Array(13).fill(0));
 
     useEffect(() => {
@@ -45,11 +39,49 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
             return Number(item[1]);
         });
 
+        const shape: IShapeList = {
+            club: 0,
+            heart: 0,
+            diamond: 0,
+            spade: 0,
+        };
+
         // shapeArr 로 현재 shape 갯수 확인
         shapeArr.forEach((item) => {
-            console.log('adfasfdf', isPlay, item);
+            switch (item) {
+                case 'club':
+                    shape.club++;
+                    break;
+                case 'heart':
+                    shape.heart++;
+                    break;
+                case 'diamond':
+                    shape.diamond++;
+                    break;
+                case 'spade':
+                    shape.spade++;
+                    break;
+
+                default:
+                    break;
+            }
         });
+
+        setShapeList(shape);
     }, [cardList]);
+
+    // 플러시 확인
+    useEffect(() => {
+        if (cardList.length < 3 || !isPlay) return; // 카드의 숫자가 3개 미만이거나 플레이어가 아니면 리턴
+
+        // 객체 for 문
+        for (const [key, value] of Object.entries(shapeList)) {
+            if (value >= 5) {
+                cardMade.flush.made = true;
+                cardMade.flush.shape = key as TCardShape;
+            }
+        }
+    }, [shapeList]);
 
     return (
         <div className="card-box">

@@ -22,3 +22,10 @@ export interface ICardMade {
     subNumber?: number;
     shape?: TCardShape;
 }
+
+export interface IShapeList {
+    club: number;
+    heart: number;
+    diamond: number;
+    spade: number;
+}
