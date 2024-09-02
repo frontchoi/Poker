@@ -59,7 +59,7 @@ const Game = () => {
     // 카드 분배하는 함수
     const cardPlay = () => {
         const cards: string[] = JSON.parse(JSON.stringify(cardList));
-        const { green, black, red, yellow, orange } = { ...userList };
+        let { green, black, red, yellow, orange } = { ...userList };
 
         green.push(cards.shift() || 'error');
         red.push(cards.shift() || 'error');
@@ -67,15 +67,15 @@ const Game = () => {
         orange.push(cards.shift() || 'error');
         yellow.push(cards.shift() || 'error');
 
-        // 카드 분배 후 state 업데이트
-        setCardList(cards);
         setUserList({
-            green,
-            red,
-            black,
-            orange,
-            yellow,
+            green: [...green], // 스프레드 문법을 사용하여 새로운 배열 복사
+            red: [...red],
+            black: [...black],
+            orange: [...orange],
+            yellow: [...yellow],
         });
+
+        setCardList(cards);
 
         // 상태 업데이트 함수에 이전 상태를 기반으로 새로운 상태를 설정
         setPlayCount((prevCount) => prevCount + 1);

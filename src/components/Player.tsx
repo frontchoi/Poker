@@ -36,8 +36,6 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
 
     useEffect(() => {
         if (cardList.length >= 3 && isPlay) {
-            console.log('cardList', cardList);
-
             const arr: string[][] = cardList.map((item) => item.split('_'));
 
             const shapeArr: string[] = arr.map((item) => {
@@ -46,11 +44,8 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
             const numberArr: number[] = arr.map((item) => {
                 return Number(item[1]);
             });
-
-            console.log('shapeList', shapeList);
-            console.log('numberList', numberList);
         }
-    });
+    }, [cardList]);
 
     return (
         <div className="card-box">
