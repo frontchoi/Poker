@@ -9,7 +9,7 @@ interface ICardMadeMap {
 type TNumberListType = {
     [key: string]: number;
 };
-const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect }) => {
+const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winner }) => {
     // spade > diamond > heart > club
     let cardMade: ICardMadeMap = {
         noPair: { made: true, number: 0 },
@@ -200,7 +200,7 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect }) =>
     return (
         <div className="card-box">
             <p className="txt-made">{currentMade}</p>
-            <div className={`photo ${name} ${isSelect ? 'check' : ''}`}></div>
+            <div className={`photo ${name} ${isSelect ? 'check' : ''} ${winner ? 'winner' : ''}`}></div>
             <div className="cards">
                 <ul>
                     {cardList.map((item, idx) => {

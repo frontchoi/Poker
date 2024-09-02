@@ -57,7 +57,7 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
         const getWinner = () => {
             const scoreArr: any = [greenMade, blackMade, orangeMade, redMade, yellowMade];
             const maxScore: number = Math.max(...scoreArr.map((item: any) => item.score));
-            const maxScoreUser = scoreArr.find((item: any) => item.score === maxScore);
+            const maxScoreUser = scoreArr.find((item: any) => item.score === maxScore); // filter()
             return maxScoreUser;
         };
 

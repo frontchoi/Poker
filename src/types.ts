@@ -6,6 +6,7 @@ export interface IPlayerProps {
     isPlay: boolean;
     isSelect: boolean;
     cardList: string[];
+    winner: boolean;
 }
 
 export enum EIsProgress {
