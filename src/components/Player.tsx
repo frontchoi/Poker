@@ -85,33 +85,35 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
         for (const [key, value] of Object.entries(shapeList)) {
             if (value >= 5) {
                 cardMade.flush.made = true;
-                cardMade.flush.number = Math.max(...numberArr);
+
+                if (key === '1') cardMade.flush.number = 1; // A 예외처리
+                else cardMade.flush.number = Math.max(...numberArr);
                 // cardMade.flush.shape = key as TCardShape;
             }
         }
 
-        cardMade.noPair.number = Math.max(...numberArr); // 배열 안에서 제일 높은 수 찾기
+        cardMade.noPair.number = numberList['1'] > 0 ? numberList['1'] : Math.max(...numberArr); // 배열 안에서 제일 높은 수 찾기
 
         for (const [key, value] of Object.entries(numberList)) {
             // 원페어 확인
             if (value === 2) {
                 cardMade.onePair.made = true;
-                cardMade.onePair.number = Number(key || 0);
+                cardMade.onePair.number = numberList['1'] === 2 ? 1 : Number(key || 0);
             }
             // 트리플 확인
             if (value >= 3) {
                 cardMade.triple.made = true;
-                cardMade.triple.number = Number(key || 0);
+                cardMade.triple.number = numberList['1'] === 3 ? 1 : Number(key || 0);
             }
             // 풀 하우스 확인
             if (cardMade.onePair.made && cardMade.triple.made) {
                 cardMade.fullHouse.made = true;
-                cardMade.fullHouse.number = Number(cardMade.triple.number || 0);
+                cardMade.fullHouse.number = numberList['1'] === 3 ? 1 : Number(cardMade.triple.number || 0);
             }
             // 포카드 확인
             if (value >= 4) {
                 cardMade.fourCards.made = true;
-                cardMade.fourCards.number = Number(key || 0);
+                cardMade.fourCards.number = numberList['1'] === 4 ? 1 : Number(key || 0);
             }
         }
 
@@ -145,24 +147,46 @@ const Player: React.FC<IPlayerProps> = ({ photo, isPlay, cardList, isSelect }) =
     const madeCheck = () => {
         const { noPair, onePair, twoPair, triple, flush, fullHouse, fourCards } = cardMade;
 
-        let txt = `${noPair.number && noPair.number > 10 ? jqkaToStr(noPair.number) : noPair.number} 노페어`;
+        let txt = `${
+            noPair.number && noPair.number > 10 ? jqkaToStr(noPair.number) : noPair.number === 1 ? jqkaToStr(noPair.number) : noPair.number
+        } 노페어`;
         if (onePair.made) {
-            txt = `${onePair.number && onePair.number > 10 ? jqkaToStr(onePair.number) : onePair.number} 원페어`;
+            txt = `${
+                onePair.number && onePair.number > 10 ? jqkaToStr(onePair.number) : onePair.number === 1 ? jqkaToStr(onePair.number) : onePair.number
+            } 원페어`;
         }
         if (twoPair.made) {
-            txt = `${twoPair.number && twoPair.number > 10 ? jqkaToStr(twoPair.number) : twoPair.number} 투페어`;
+            txt = `${
+                twoPair.number && twoPair.number > 10 ? jqkaToStr(twoPair.number) : twoPair.number === 1 ? jqkaToStr(twoPair.number) : twoPair.number
+            } 투페어`;
         }
         if (triple.made) {
-            txt = `${triple.number && triple.number > 10 ? jqkaToStr(triple.number) : triple.number} 트리플`;
+            txt = `${
+                triple.number && triple.number > 10 ? jqkaToStr(triple.number) : triple.number === 1 ? jqkaToStr(triple.number) : triple.number
+            } 트리플`;
         }
         if (flush.made) {
-            txt = `${flush.number && flush.number > 10 ? jqkaToStr(flush.number) : flush.number} 플러시`;
+            txt = `${
+                flush.number && flush.number > 10 ? jqkaToStr(flush.number) : flush.number === 1 ? jqkaToStr(flush.number) : flush.number
+            } 플러시`;
         }
         if (fullHouse.made) {
-            txt = `${fullHouse.number && fullHouse.number > 10 ? jqkaToStr(fullHouse.number) : fullHouse.number} 풀하우스`;
+            txt = `${
+                fullHouse.number && fullHouse.number > 10
+                    ? jqkaToStr(fullHouse.number)
+                    : fullHouse.number === 1
+                    ? jqkaToStr(fullHouse.number)
+                    : fullHouse.number
+            } 풀하우스`;
         }
         if (fourCards.made) {
-            txt = `${fourCards.number && fourCards.number > 10 ? jqkaToStr(fourCards.number) : fourCards.number} 포카드`;
+            txt = `${
+                fourCards.number && fourCards.number > 10
+                    ? jqkaToStr(fourCards.number)
+                    : fourCards.number === 1
+                    ? jqkaToStr(fourCards.number)
+                    : fourCards.number
+            } 포카드`;
         }
 
         setCurrentMade(txt);
