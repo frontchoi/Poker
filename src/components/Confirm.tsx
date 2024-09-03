@@ -3,7 +3,7 @@ import { TUserName } from '../types';
 import { UserContext } from '../context/UserContext';
 
 interface IConfirmProps {
-    popupClose: () => void; // popupClose 함수의 타입 정의
+    popupClose: (confirm: boolean) => void; // popupClose 함수의 타입 정의
 }
 
 const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
@@ -13,7 +13,7 @@ const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
     const userSelect = (user: TUserName) => {
         setIsSelect((prevUser) => (prevUser === user ? '' : user));
         setUser(user);
-        popupClose();
+        popupClose(true);
     };
 
     return (
@@ -48,6 +48,7 @@ const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
                 >
                     확인
                 </button>
+                <button onClick={() => popupClose(false)}>닫기</button>
             </div>
         </div>
     );

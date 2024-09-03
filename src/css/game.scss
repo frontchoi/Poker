@@ -7,8 +7,8 @@
     .btn-play {
         position: absolute;
         top: 200px;
-        left: calc(50% - 50px);
-        width: 100px;
+        left: calc(50% - 100px);
+        width: 200px;
         height: 50px;
         font-size: 18px;
     }
@@ -236,6 +236,9 @@
                 width: 100px;
                 height: 40px;
                 margin-top: 20px;
+                & + button {
+                    margin-left: 10px;
+                }
             }
         }
     }

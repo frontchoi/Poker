@@ -11,6 +11,15 @@
     color: #fff;
     z-index: 100;
 
+    a {
+        position: absolute;
+        top: 46px;
+        left: 20px;
+        font-size: 20px;
+        text-decoration: none;
+        color: #fff;
+    }
+
     .playing {
         font-size: 30px;
     }

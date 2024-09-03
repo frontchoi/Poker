@@ -13,6 +13,7 @@ export enum EIsProgress {
     PLAY,
     END,
     CONFIRM,
+    POPUP,
     RESULT,
 }
 

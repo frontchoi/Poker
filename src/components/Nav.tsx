@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'context/UserContext';
 import 'css/nav.scss';
+import { Link } from 'react-router-dom';
 
 const Nav = () => {
     const [selectUser, setUser, setScore, getWinner] = useContext<any>(UserContext);
-
-    useEffect(() => {}, [selectUser]);
-
     return (
         <div className="nav">
+            <Link to="/">메인으로</Link>
             {getWinner().name ? (
                 <div className="result">
                     <p>
