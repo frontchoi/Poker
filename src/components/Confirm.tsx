@@ -19,7 +19,7 @@ const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
     return (
         <div className="confirm-popup">
             <div className="popup-content">
-                <p>게임의 승자를 예측해 보세요.</p>
+                <p>이번 라운드의 승자를 예측해 보세요.</p>
                 <ul>
                     <li
                         className={`photo black ${isSelect === 'black' ? 'popup-check' : ''}`}

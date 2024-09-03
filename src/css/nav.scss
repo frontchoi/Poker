@@ -1,4 +1,4 @@
-.nav {
+.nav-wrap {
     position: fixed;
     top: 0;
     left: 0;
@@ -61,6 +61,29 @@
                     background-image: url('/assets/images/user/yellow.jpg');
                     background-size: 100%;
                 }
+            }
+        }
+    }
+    .result-history {
+        position: absolute;
+        top: 46px;
+        right: 20px;
+        display: flex;
+        li {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #dfdfdf;
+            border-radius: 100%;
+
+            & + li {
+                margin-left: 10px;
+            }
+
+            &.fail {
+                background: red;
+            }
+            &.success {
+                background: green;
             }
         }
     }

@@ -76,6 +76,12 @@ const Player: React.FC<IPlayerProps> = ({ name, cardList, winner, gameEnd }) => 
             }
         });
 
+        // 원페어: 1점
+        // 투페어: 2점
+        // 트리플: 3점
+        // 플러시: 4점
+        // 풀하우스: 5점
+        // 포카드: 6점
         // 2. 페어, 트리플, 풀하우스, 포카드 확인
         const numberArr: number[] = arr.map((item) => {
             return Number(item[1]);

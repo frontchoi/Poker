@@ -31,7 +31,8 @@ const Game = () => {
         red: [],
         yellow: [],
     });
-    const [selectUser, setUser, setScore, getWinner] = useContext<any>(UserContext);
+    const [selectUser, setUser, setScore, getWinner, getResult, setResult] =
+        useContext<any>(UserContext);
 
     useEffect(() => {
         let arr: any = [];
@@ -95,6 +96,12 @@ const Game = () => {
         else setIsProgress(EIsProgress.CONFIRM);
     };
 
+    // 다음 라운드 (초기화)
+    const nextRound = () => {
+        setResult(selectUser === getWinner()?.name); // 컨텍스트에 히스토리 저장
+        setIsProgress(EIsProgress.INIT);
+    };
+
     return (
         <>
             <Nav />
@@ -112,6 +119,11 @@ const Game = () => {
                 {isProgress === EIsProgress.END || isProgress === EIsProgress.CONFIRM ? (
                     <button className="btn-play" onClick={() => setIsProgress(EIsProgress.POPUP)}>
                         승자 예측
+                    </button>
+                ) : undefined}
+                {isProgress === EIsProgress.RESULT ? (
+                    <button className="btn-play" onClick={() => nextRound()}>
+                        다음 라운드
                     </button>
                 ) : undefined}
                 <div className={`user-wrap ${isProgress === EIsProgress.RESULT ? 'result' : ''}`}>
