@@ -1,6 +1,11 @@
 import { createContext, useMemo, useState, ReactNode } from 'react';
 
-type TUserContext = [any, (user: any) => void, (name: string, score: number, number: number) => void, () => any]; // 사용자 타입에 맞게 `any`를 적절히 변경
+type TUserContext = [
+    any,
+    (user: any) => void,
+    (name: string, score: number, number: number) => void,
+    () => any,
+]; // 사용자 타입에 맞게 `any`를 적절히 변경
 type TMadeType = {
     [key: string]: number | string;
 };
@@ -29,7 +34,6 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
         const setUser = (user: any) => {
             setSelectUser(user === selectUser ? '' : user);
         };
-
         const setScore = (name: string, score: number) => {
             switch (name) {
                 case 'green':
@@ -54,10 +58,15 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
         };
 
         const getWinner = () => {
-            const scoreArr: any = [greenMade, blackMade, orangeMade, redMade, yellowMade];
+            // 스코어 계산 전 실행 방지 (원래는 게임의 진행 상태를 context 에 저장하여 컨트롤하는게 제일 이상적임)
+            const scoreArr: TMadeType[] = [greenMade, blackMade, orangeMade, redMade, yellowMade];
             const maxScore: number = Math.max(...scoreArr.map((item: any) => item.score));
-            const maxScoreUser = scoreArr.find((item: any) => item.score === maxScore);
-            return maxScoreUser;
+            const maxScoreUser: TMadeType = scoreArr.find(
+                (item: any) => item.score === maxScore,
+            ) || { name: '', score: 0 };
+
+            if (maxScore === 0) return { name: '', score: 0 };
+            else return maxScoreUser;
         };
 
         return [selectUser, setUser, setScore, getWinner] as TUserContext;

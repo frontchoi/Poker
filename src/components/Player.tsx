@@ -9,7 +9,7 @@ interface ICardMadeMap {
 type TNumberListType = {
     [key: string]: number;
 };
-const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winner }) => {
+const Player: React.FC<IPlayerProps> = ({ name, cardList, winner, gameEnd }) => {
     // spade > diamond > heart > club
     let cardMade: ICardMadeMap = {
         noPair: { made: true, number: 0 },
@@ -43,7 +43,7 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winn
     };
     // ------------------------------------------------------------------
     const [currentMade, setCurrentMade] = useState<string>('');
-    const [selectUser, setUser, setScore] = useContext<any>(UserContext);
+    const [selectUser, setUser, setScore, getWinner] = useContext<any>(UserContext);
 
     useEffect(() => {
         if (cardList.length < 3) return; // 카드의 숫자가 3개 미만이거나 플레이어가 아니면 리턴
@@ -117,7 +117,8 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winn
             // 풀 하우스 확인
             if (cardMade.onePair.made && cardMade.triple.made) {
                 cardMade.fullHouse.made = true;
-                cardMade.fullHouse.number = numberList['1'] === 3 ? 1 : Number(cardMade.triple.number || 0);
+                cardMade.fullHouse.number =
+                    numberList['1'] === 3 ? 1 : Number(cardMade.triple.number || 0);
             }
             // 포카드 확인
             if (value >= 4) {
@@ -158,38 +159,64 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winn
         let number = 0;
         const { noPair, onePair, twoPair, triple, flush, fullHouse, fourCards } = cardMade;
 
-        let txt = `${noPair.number && (noPair.number === 1 || noPair.number > 10) ? jqkaToStr(noPair.number) : noPair.number} 노페어`;
+        let txt = `${
+            noPair.number && (noPair.number === 1 || noPair.number > 10)
+                ? jqkaToStr(noPair.number)
+                : noPair.number
+        } 탑`;
         if (onePair.made) {
             score = 1;
             number = onePair.number || 0;
-            txt = `${onePair.number && (onePair.number === 1 || onePair.number > 10) ? jqkaToStr(onePair.number) : onePair.number} 원페어`;
+            txt = `${
+                onePair.number && (onePair.number === 1 || onePair.number > 10)
+                    ? jqkaToStr(onePair.number)
+                    : onePair.number
+            } 원페어`;
         }
         if (twoPair.made) {
             score = 2;
             number = twoPair.number || 0;
-            txt = `${twoPair.number && (twoPair.number === 1 || twoPair.number > 10) ? jqkaToStr(twoPair.number) : twoPair.number} 투페어`;
+            txt = `${
+                twoPair.number && (twoPair.number === 1 || twoPair.number > 10)
+                    ? jqkaToStr(twoPair.number)
+                    : twoPair.number
+            } 투페어`;
         }
         if (triple.made) {
             score = 3;
             number = triple.number || 0;
-            txt = `${triple.number && (triple.number === 1 || triple.number > 10) ? jqkaToStr(triple.number) : triple.number} 트리플`;
+            txt = `${
+                triple.number && (triple.number === 1 || triple.number > 10)
+                    ? jqkaToStr(triple.number)
+                    : triple.number
+            } 트리플`;
         }
         if (flush.made) {
             score = 4;
             number = flush.number || 0;
-            txt = `${flush.number && (flush.number === 1 || flush.number > 10) ? jqkaToStr(flush.number) : flush.number} 플러시`;
+            txt = `${
+                flush.number && (flush.number === 1 || flush.number > 10)
+                    ? jqkaToStr(flush.number)
+                    : flush.number
+            } 플러시`;
         }
         if (fullHouse.made) {
             score = 5;
             number = fullHouse.number || 0;
             txt = `${
-                fullHouse.number && (fullHouse.number === 1 || fullHouse.number > 10) ? jqkaToStr(fullHouse.number) : fullHouse.number
+                fullHouse.number && (fullHouse.number === 1 || fullHouse.number > 10)
+                    ? jqkaToStr(fullHouse.number)
+                    : fullHouse.number
             } 풀하우스`;
         }
         if (fourCards.made) {
             score = 6;
             number = fourCards.number || 0;
-            txt = `${fourCards.number && (fourCards.number === 1 || fourCards.number > 10) ? jqkaToStr(fourCards.number) : fourCards.number} 포카드`;
+            txt = `${
+                fourCards.number && (fourCards.number === 1 || fourCards.number > 10)
+                    ? jqkaToStr(fourCards.number)
+                    : fourCards.number
+            } 포카드`;
         }
 
         if (number === 1) number = 14; // A일 경우 제일 높은 값으로 변경
@@ -207,7 +234,7 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winn
 
     return (
         <div className="card-box">
-            <div className={`photo ${name} ${isSelect ? 'check' : ''} ${winner ? 'winner' : ''}`}>
+            <div className={`photo ${name} ${gameEnd ? (winner ? 'winner' : 'loser') : ''}`}>
                 <span></span>
             </div>
             <p className="txt-made">{currentMade}</p>

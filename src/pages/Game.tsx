@@ -11,7 +11,11 @@ const Game = () => {
     const [cardList, setCardList] = useState<string[]>([]); // 전체 카드
     const [isProgress, setIsProgress] = useState<EIsProgress>(EIsProgress.INIT);
     const [playCount, setPlayCount] = useState<number>(0);
-    const [winner, setWinner] = useState<{ name: string; score: number; number: number }>({ name: '', score: 0, number: 0 });
+    const [winner, setWinner] = useState<{ name: string; score: number; number: number }>({
+        name: '',
+        score: 0,
+        number: 0,
+    });
 
     const [userList, setUserList] = useState<{
         green: string[];
@@ -43,6 +47,9 @@ const Game = () => {
         else if (playCount > 0 && playCount < 3) cardPlay(); // 처음 시작 시 3장의 카드를 받게함
     }, [playCount]);
 
+    useEffect(() => {
+        if (isProgress >= EIsProgress.RESULT) setWinner(getWinner());
+    }, [isProgress]);
     // -----------------------------------------------------------
     // 모양별 카드 생성 함수
     const cardAdd = (shape: TCardShape) => {
@@ -84,9 +91,6 @@ const Game = () => {
     // 유저 선택 팝업 닫힘
     const closeUserSelect = () => {
         setIsProgress(EIsProgress.RESULT);
-        setWinner(getWinner());
-
-        console.log('getWinner()', getWinner());
     };
 
     return (
@@ -107,27 +111,40 @@ const Game = () => {
                 </button>
             ) : undefined}
             <div className={`user-wrap ${isProgress === EIsProgress.RESULT ? 'result' : ''}`}>
-                <Player name="black" isPlay={false} isSelect={selectUser === 'black'} cardList={userList.black} winner={winner.name === 'black'} />
+                <Player
+                    name="black"
+                    cardList={userList.black}
+                    winner={winner.name === 'black'}
+                    gameEnd={isProgress === EIsProgress.RESULT}
+                />
                 <Player
                     name="orange"
-                    isPlay={false}
-                    isSelect={selectUser === 'orange'}
                     cardList={userList.orange}
                     winner={winner.name === 'orange'}
+                    gameEnd={isProgress === EIsProgress.RESULT}
                 />
             </div>
             <div className={`user-wrap ${isProgress === EIsProgress.RESULT ? 'result' : ''}`}>
-                <Player name="red" isPlay={false} isSelect={selectUser === 'red'} cardList={userList.red} winner={winner.name === 'red'} />
+                <Player
+                    name="red"
+                    cardList={userList.red}
+                    winner={winner.name === 'red'}
+                    gameEnd={isProgress === EIsProgress.RESULT}
+                />
                 <Player
                     name="yellow"
-                    isPlay={false}
-                    isSelect={selectUser === 'yellow'}
                     cardList={userList.yellow}
                     winner={winner.name === 'yellow'}
+                    gameEnd={isProgress === EIsProgress.RESULT}
                 />
             </div>
             <div className="player-wrap">
-                <Player name="green" isPlay={true} isSelect={selectUser === 'green'} cardList={userList.green} winner={winner.name === 'green'} />
+                <Player
+                    name="green"
+                    cardList={userList.green}
+                    winner={winner.name === 'green'}
+                    gameEnd={isProgress === EIsProgress.RESULT}
+                />
             </div>
             {isProgress === EIsProgress.CONFIRM && <Confirm popupClose={closeUserSelect} />}
         </div>

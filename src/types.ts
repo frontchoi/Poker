@@ -3,10 +3,9 @@ export type TUserName = '' | 'green' | 'black' | 'orange' | 'red' | 'yellow';
 
 export interface IPlayerProps {
     name: TUserName;
-    isPlay: boolean;
-    isSelect: boolean;
     cardList: string[];
     winner: boolean;
+    gameEnd: boolean;
 }
 
 export enum EIsProgress {
