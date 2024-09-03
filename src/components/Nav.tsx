@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'context/UserContext';
 import 'css/nav.scss';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Nav = () => {
+    const navigate = useNavigate();
     const [selectUser, setUser, setScore, getWinner, getResult, setResult, setRound] =
         useContext<any>(UserContext);
 
@@ -18,7 +20,14 @@ const Nav = () => {
 
     return (
         <div className="nav-wrap">
-            <Link to="/">메인으로</Link>
+            <button
+                onClick={() => {
+                    navigate('/');
+                    window.location.reload();
+                }}
+            >
+                메인으로
+            </button>
             {/* {getWinner().name ? (
                 <div className="result">
                     <p>

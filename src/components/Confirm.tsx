@@ -65,7 +65,14 @@ export const GameOver: React.FC<any> = ({ popupClose }) => {
                     <br />
                     메인으로 이동하시겠습니까?
                 </p>
-                <button onClick={() => navigate('/')}>확인</button>
+                <button
+                    onClick={() => {
+                        navigate('/');
+                        window.location.reload();
+                    }}
+                >
+                    확인
+                </button>
                 <button onClick={() => popupClose(false)}>닫기</button>
             </div>
         </div>

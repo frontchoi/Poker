@@ -11,10 +11,12 @@
     color: #fff;
     z-index: 100;
 
-    a {
+    button {
         position: absolute;
         top: 46px;
         left: 20px;
+        background-color: transparent;
+        border: 0 none;
         font-size: 20px;
         text-decoration: none;
         color: #fff;
