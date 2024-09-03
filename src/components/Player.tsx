@@ -186,7 +186,9 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winn
             txt = `${fourCards.number && (fourCards.number === 1 || fourCards.number > 10) ? jqkaToStr(fourCards.number) : fourCards.number} 포카드`;
         }
 
-        setScore(name, score, number);
+        if (number === 1) number = 14; // A일 경우 제일 높은 값으로 변경
+
+        setScore(name, score * number);
         setCurrentMade(txt);
     };
 

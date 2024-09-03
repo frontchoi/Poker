@@ -19,34 +19,33 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
     const [greenMade, setGreenMade] = useState<TMadeType>({
         name: 'green',
         score: 0,
-        number: 0,
     });
-    const [blackMade, setBlackMade] = useState<TMadeType>({ name: 'black', score: 0, number: 0 });
-    const [orangeMade, setOrangeMade] = useState<TMadeType>({ name: 'orange', score: 0, number: 0 });
-    const [redMade, setRedMade] = useState<TMadeType>({ name: 'red', score: 0, number: 0 });
-    const [yellowMade, setYellowMade] = useState<TMadeType>({ name: 'yellow', score: 0, number: 0 });
+    const [blackMade, setBlackMade] = useState<TMadeType>({ name: 'black', score: 0 });
+    const [orangeMade, setOrangeMade] = useState<TMadeType>({ name: 'orange', score: 0 });
+    const [redMade, setRedMade] = useState<TMadeType>({ name: 'red', score: 0 });
+    const [yellowMade, setYellowMade] = useState<TMadeType>({ name: 'yellow', score: 0 });
 
     const value = useMemo(() => {
         const setUser = (user: any) => {
             setSelectUser(user);
         };
 
-        const setScore = (name: string, score: number, number: number) => {
+        const setScore = (name: string, score: number) => {
             switch (name) {
                 case 'green':
-                    setGreenMade({ name, score, number });
+                    setGreenMade({ name, score });
                     break;
                 case 'black':
-                    setBlackMade({ name, score, number });
+                    setBlackMade({ name, score });
                     break;
                 case 'orange':
-                    setOrangeMade({ name, score, number });
+                    setOrangeMade({ name, score });
                     break;
                 case 'red':
-                    setRedMade({ name, score, number });
+                    setRedMade({ name, score });
                     break;
                 case 'yellow':
-                    setYellowMade({ name, score, number });
+                    setYellowMade({ name, score });
                     break;
 
                 default:
@@ -57,7 +56,7 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
         const getWinner = () => {
             const scoreArr: any = [greenMade, blackMade, orangeMade, redMade, yellowMade];
             const maxScore: number = Math.max(...scoreArr.map((item: any) => item.score));
-            const maxScoreUser = scoreArr.find((item: any) => item.score === maxScore); // filter()
+            const maxScoreUser = scoreArr.find((item: any) => item.score === maxScore);
             return maxScoreUser;
         };
 
