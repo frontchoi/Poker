@@ -4,13 +4,17 @@ import 'css/nav.scss';
 import { Link } from 'react-router-dom';
 
 const Nav = () => {
-    const [selectUser, setUser, setScore, getWinner, getResult, setResult] =
+    const [selectUser, setUser, setScore, getWinner, getResult, setResult, setRound] =
         useContext<any>(UserContext);
 
-    const [round, setRound] = useState<number>(1);
+    const [playRound, setPlayRound] = useState<number>(1);
     useEffect(() => {
-        setRound(getResult().findIndex((item: boolean | null) => item === null) + 1);
+        setPlayRound(getResult().findIndex((item: boolean | null) => item === null) + 1);
     });
+
+    useEffect(() => {
+        setRound(playRound);
+    }, [playRound]);
 
     return (
         <div className="nav-wrap">
@@ -25,7 +29,11 @@ const Nav = () => {
                     </p>
                 </div>
             ) */}
-            <p className="playing">{`${round} 라운드 게임이 진행중 입니다.`}</p>
+            {playRound < 11 && playRound > 0 ? (
+                <p className="playing">{`${playRound} 라운드 게임이 진행중 입니다.`}</p>
+            ) : (
+                <p className="playing">게임 종료</p>
+            )}
             <ul className="result-history">
                 {getResult().map((item: boolean | null, idx: number) => {
                     return (

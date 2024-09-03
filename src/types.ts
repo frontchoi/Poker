@@ -15,6 +15,8 @@ export enum EIsProgress {
     CONFIRM,
     POPUP,
     RESULT,
+    GAMEOVER,
+    GAMEOVER_POPUP,
 }
 
 export interface ICardMade {

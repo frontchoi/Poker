@@ -3,11 +3,14 @@ import { TCardShape, TUserName, EIsProgress } from 'types';
 import Nav from 'components/Nav';
 import Cards from 'components/Cards';
 import Player from 'components/Player';
-import Confirm from 'components/Confirm';
+import { Confirm, GameOver } from 'components/Confirm';
 import { UserContext } from 'context/UserContext';
 import 'css/game.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Game = () => {
+    const [selectUser, setUser, setScore, getWinner, getResult, setResult, setRound, getRound] =
+        useContext<any>(UserContext);
     const [shapeList, setShapeList] = useState<TCardShape[]>(['diamond', 'club', 'heart', 'spade']);
     const [cardList, setCardList] = useState<string[]>([]); // 전체 카드
     const [isProgress, setIsProgress] = useState<EIsProgress>(EIsProgress.INIT);
@@ -17,6 +20,7 @@ const Game = () => {
         score: 0,
         number: 0,
     });
+    const navigate = useNavigate();
 
     const [userList, setUserList] = useState<{
         green: string[];
@@ -31,27 +35,23 @@ const Game = () => {
         red: [],
         yellow: [],
     });
-    const [selectUser, setUser, setScore, getWinner, getResult, setResult] =
-        useContext<any>(UserContext);
 
     useEffect(() => {
-        let arr: any = [];
-        shapeList.forEach((shape: TCardShape) => {
-            arr = [...arr, ...cardAdd(shape)];
-        });
-        // 생성된 카드를 셔플
-        arr.sort(() => Math.random() - 0.5);
-        setCardList(arr);
-    }, []);
+        if (isProgress === EIsProgress.INIT) {
+            let arr: any = [];
+            shapeList.forEach((shape: TCardShape) => {
+                arr = [...arr, ...cardAdd(shape)];
+            });
+            // 생성된 카드를 셔플
+            arr.sort(() => Math.random() - 0.5);
+            setCardList(arr);
+        } else if (isProgress >= EIsProgress.RESULT) setWinner(getWinner());
+    }, [isProgress]);
 
     useEffect(() => {
         if (playCount === 7) setIsProgress(EIsProgress.END);
         else if (playCount > 0 && playCount < 3) cardPlay(); // 처음 시작 시 3장의 카드를 받게함
     }, [playCount]);
-
-    useEffect(() => {
-        if (isProgress >= EIsProgress.RESULT) setWinner(getWinner());
-    }, [isProgress]);
     // -----------------------------------------------------------
     // 모양별 카드 생성 함수
     const cardAdd = (shape: TCardShape) => {
@@ -92,14 +92,32 @@ const Game = () => {
     };
     // 유저 선택 팝업 닫힘
     const closeUserSelect = (confirm: boolean) => {
-        if (confirm) setIsProgress(EIsProgress.RESULT);
-        else setIsProgress(EIsProgress.CONFIRM);
+        if (confirm) {
+            setIsProgress(EIsProgress.RESULT);
+            setResult(selectUser === getWinner()?.name); // 컨텍스트에 히스토리 저장
+        } else setIsProgress(EIsProgress.CONFIRM);
+    };
+
+    // 게임 종료 팝업
+    const closeGameover = (confirm: boolean) => {
+        setIsProgress(EIsProgress.GAMEOVER);
     };
 
     // 다음 라운드 (초기화)
     const nextRound = () => {
-        setResult(selectUser === getWinner()?.name); // 컨텍스트에 히스토리 저장
-        setIsProgress(EIsProgress.INIT);
+        if (getRound() === 10) {
+            setIsProgress(EIsProgress.GAMEOVER_POPUP);
+        } else {
+            setUserList({
+                green: [],
+                black: [],
+                orange: [],
+                red: [],
+                yellow: [],
+            });
+            setPlayCount(0);
+            setIsProgress(EIsProgress.INIT);
+        }
     };
 
     return (
@@ -163,6 +181,9 @@ const Game = () => {
                     />
                 </div>
                 {isProgress === EIsProgress.POPUP && <Confirm popupClose={closeUserSelect} />}
+                {isProgress === EIsProgress.GAMEOVER_POPUP && (
+                    <GameOver popupClose={closeGameover} />
+                )}
             </div>
         </>
     );

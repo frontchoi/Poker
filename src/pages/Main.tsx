@@ -16,8 +16,8 @@ const Main = () => {
         <div className="main-wrap">
             <h1>POKER 승자 맞추기 게임</h1>
             <ul className="player-list">
-                {playerList.map((item) => {
-                    return <li className={`${item}`}></li>;
+                {playerList.map((item, idx) => {
+                    return <li key={idx} className={`${item}`}></li>;
                 })}
             </ul>
             <ul className="rule-list">

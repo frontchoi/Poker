@@ -17,6 +17,8 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
         Array.from({ length: 10 }, () => null),
     );
 
+    const [playRound, setPlayRound] = useState(1);
+
     const value = useMemo(() => {
         // 선택한 유저 저장
         const setUser = (user: any) => {
@@ -71,7 +73,23 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
             setPlayResult(arr);
         };
 
-        return [selectUser, setUser, setScore, getWinner, getResult, setResult] as any;
+        const setRound = (round: number) => {
+            setPlayRound(round);
+        };
+        const getRound = () => {
+            return playRound;
+        };
+
+        return [
+            selectUser,
+            setUser,
+            setScore,
+            getWinner,
+            getResult,
+            setResult,
+            setRound,
+            getRound,
+        ] as any;
     }, [selectUser]);
 
     return <UserContext.Provider value={value}>{props.children}</UserContext.Provider>;
