@@ -12,7 +12,6 @@ const Confirm: React.FC<IConfirmProps> = ({ popupClose }) => {
 
     const userSelect = (user: TUserName) => {
         setIsSelect((prevUser) => (prevUser === user ? '' : user));
-
         setUser(user);
     };
 

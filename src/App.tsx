@@ -21,8 +21,8 @@ function App() {
         <div className="App">
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<MainPage />}></Route>
-                    <Route path="/game" element={<GamePage />}></Route>
+                    {/* <Route index element={<MainPage />}></Route> */}
+                    <Route index element={<GamePage />}></Route>
                     <Route path="/result" element={<ResultPage />}></Route>
                 </Route>
             </Routes>

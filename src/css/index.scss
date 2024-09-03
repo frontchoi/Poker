@@ -7,7 +7,7 @@ body,
 }
 
 body {
-    background-color: rgb(1, 0, 5);
+    background-color: rgb(30 40 31);
     // font-family: 'JetBrains Mono', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, 'Apple Color Emoji', Arial, sans-serif,
     //     'Segoe UI Emoji', 'Segoe UI Symbol', 'Nanum Gothic';
     // font-family: 'CookieRun-Regular';
@@ -26,9 +26,13 @@ body {
                 position: fixed;
                 top: 0;
                 left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 width: 100%;
-                height: 30px;
-                background-color: #fff;
+                height: 50px;
+                background-color: #000;
+                color: #fff;
             }
         }
     }

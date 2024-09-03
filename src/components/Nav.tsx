@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from 'context/UserContext';
 
-function Nav() {
-  return <div id="nav">Nav</div>;
-}
+const Nav = () => {
+    const [selectUser, setUser, setScore, getWinner] = useContext<any>(UserContext);
+
+    useEffect(() => {
+        console.log('getWinner', getWinner());
+    }, [getWinner]);
+
+    return <div id="nav">Nav</div>;
+};
 
 export default Nav;

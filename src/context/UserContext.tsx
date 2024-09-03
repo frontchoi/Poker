@@ -27,7 +27,7 @@ export const UserContextProvider = (props: { children: ReactNode }) => {
 
     const value = useMemo(() => {
         const setUser = (user: any) => {
-            setSelectUser(user);
+            setSelectUser(user === selectUser ? '' : user);
         };
 
         const setScore = (name: string, score: number) => {
