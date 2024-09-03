@@ -89,9 +89,15 @@ const Player: React.FC<IPlayerProps> = ({ name, isPlay, cardList, isSelect, winn
             if (value >= 5) {
                 cardMade.flush.made = true;
 
-                if (key === '1') cardMade.flush.number = 1; // A 예외처리
-                else cardMade.flush.number = Math.max(...numberArr);
-                // cardMade.flush.shape = key as TCardShape;
+                const flushArr: number[] = cardList.map((item) => {
+                    if (item.includes(key)) {
+                        return Number(item.replace(`${key}_`, ''));
+                    } else {
+                        return 0;
+                    }
+                });
+                if (flushArr.some((item) => item === 1)) cardMade.flush.number = 1; // A 예외처리
+                else cardMade.flush.number = Math.max(...flushArr);
             }
         }
 
